@@ -18,16 +18,14 @@ URL:            http://pypi.python.org/pypi/%{srcname}
 Source0:        http://pypi.python.org/packages/source/s/%{srcname}/%{srcname}-%{version}.tar.gz
 Source1:        psfl.txt
 Source2:        zpl.txt
-
+# next line only needed for EL5
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
 BuildArch:      noarch
 # Require this so that we use a system copy of the match_hostname() function
 Requires:       python%{iusver}-backports-ssl_match_hostname
 BuildRequires:  python%{iusver}-backports-ssl_match_hostname
 BuildRequires:  python%{iusver}-devel
 Requires:       python%{iusver}
-
 # Keep the python-distribute name active for a few releases.  Eventually we'll
 # want to get rid of the Provides and just keep the Obsoletes
 Provides:       python%{iusver}-distribute = %{version}-%{release}
@@ -53,6 +51,7 @@ CFLAGS="$RPM_OPT_FLAGS" %{__python2} setup.py build
 
 
 %install
+# next line only needed for EL5
 rm -rf %{buildroot}
 %{__python2} setup.py install --optimize 1 --skip-build --root %{buildroot}
 rm -rf %{buildroot}%{python2_sitelib}/setuptools/tests
