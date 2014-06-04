@@ -61,7 +61,7 @@ install -p -m 0644 %{SOURCE1} %{SOURCE2} .
 
 
 %check
-%{__python2} setup.py test
+LC_CTYPE=en_US.utf8 %{__python2} setup.py test
 
 
 %clean
@@ -79,6 +79,7 @@ rm -rf %{buildroot}
 * Wed Jun 04 2014 Carl George <carl.george@rackspace.com> - 4.0.1-1.ius
 - Latest upstream
 - Override __os_install_post to fix .pyc/pyo magic
+- Workaround UTF-8 tests by setting LC_CTYPE
 
 * Thu May 08 2014 Carl George <carl.george@rackspace.com> - 3.6-1.ius
 - Latest upstream
