@@ -9,7 +9,7 @@
 %global srcname setuptools
 
 Name:           python%{iusver}-%{srcname}
-Version:        5.0.1
+Version:        5.1
 Release:        1.ius%{?dist}
 Summary:        Easily build and distribute Python %{pyver} packages
 Vendor:         IUS Community Project
@@ -76,7 +76,7 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Mon Jun 16 2014 Carl George <carl.george@rackspace.com> - 5.0.1-1.ius
+* Mon Jun 16 2014 Carl George <carl.george@rackspace.com> - 5.1-1.ius
 - Latest upstream
 
 * Wed Jun 04 2014 Carl George <carl.george@rackspace.com> - 4.0.1-1.ius
