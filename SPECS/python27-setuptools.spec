@@ -9,7 +9,7 @@
 %global srcname setuptools
 
 Name:           python%{iusver}-%{srcname}
-Version:        5.4.2
+Version:        5.5.1
 Release:        1.ius%{?dist}
 Summary:        Easily build and distribute Python %{pyver} packages
 Vendor:         IUS Community Project
@@ -19,8 +19,7 @@ URL:            http://pypi.python.org/pypi/%{srcname}
 Source0:        http://pypi.python.org/packages/source/s/%{srcname}/%{srcname}-%{version}.tar.gz
 Source1:        psfl.txt
 Source2:        zpl.txt
-# next line only needed for EL5
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+%{?el5:BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)}
 BuildArch:      noarch
 # Require this so that we use a system copy of the match_hostname() function
 Requires:       python%{iusver}-backports-ssl_match_hostname
@@ -52,20 +51,19 @@ CFLAGS="$RPM_OPT_FLAGS" %{__python2} setup.py build
 
 
 %install
-# next line only needed for EL5
-rm -rf %{buildroot}
+%{?el5:%{__rm} -rf %{buildroot}}
 %{__python2} setup.py install --optimize 1 --skip-build --root %{buildroot}
-rm -rf %{buildroot}%{python2_sitelib}/setuptools/tests
-rm -f %{buildroot}%{_bindir}/easy_install
-install -p -m 0644 %{SOURCE1} %{SOURCE2} .
+%{__rm} -rf %{buildroot}%{python2_sitelib}/setuptools/tests
+%{__rm} -f %{buildroot}%{_bindir}/easy_install
+%{__install} -p -m 0644 %{SOURCE1} %{SOURCE2} .
 
 
 %check
 LC_CTYPE=en_US.utf8 %{__python2} setup.py test
 
 
-%clean
-rm -rf %{buildroot}
+%{?el5:%clean}
+%{?el5:%{__rm} -rf %{buildroot}}
 
 
 %files
@@ -76,6 +74,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Aug 11 2014 Carl George <carl.george@rackspace.com> - 5.5.1-1.ius
+- Latest upstream
+
 * Mon Aug 04 2014 Ben Harper <ben.harper@rackspace.com> - 5.4.2-1.ius
 - Latest upstream
 
