@@ -9,7 +9,7 @@
 %global srcname setuptools
 
 Name:           python%{iusver}-%{srcname}
-Version:        11.1
+Version:        11.3.1
 Release:        1.ius%{?dist}
 Summary:        Easily build and distribute Python %{pyver} packages
 Vendor:         IUS Community Project
@@ -75,6 +75,9 @@ CFLAGS="$RPM_OPT_FLAGS" %{__python2} setup.py build
 
 
 %changelog
+* Tue Jan 13 2015 Carl George <carl.george@rackspace.com> - 11.3.1-1.ius
+- Latest upstream
+
 * Mon Jan 05 2015 Carl George <carl.george@rackspace.com> - 11.1-1.ius
 - Latest upstream
 - Disable test suite
