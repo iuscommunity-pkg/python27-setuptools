@@ -10,7 +10,7 @@
 %global with_check 0
 
 Name:           python%{iusver}-%{srcname}
-Version:        11.3.1
+Version:        12.0.5
 Release:        1.ius%{?dist}
 Summary:        Easily build and distribute Python %{pyver} packages
 Vendor:         IUS Community Project
@@ -80,6 +80,10 @@ LC_CTYPE=en_US.utf8 %{__python2} setup.py ptr
 
 
 %changelog
+* Mon Jan 26 2015 Carl George <carl.george@rackspace.com> - 12.0.5-1.ius
+- Remove dependency on ssl_match_hostname backport, it's included in Python 2.7.9
+- Latest upstream
+
 * Tue Jan 13 2015 Carl George <carl.george@rackspace.com> - 11.3.1-1.ius
 - Latest upstream
 
