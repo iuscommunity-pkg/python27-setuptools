@@ -21,11 +21,8 @@ Source1:        psfl.txt
 Source2:        zpl.txt
 %{?el5:BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)}
 BuildArch:      noarch
-# Require this so that we use a system copy of the match_hostname() function
-Requires:       python%{iusver}-backports-ssl_match_hostname
-BuildRequires:  python%{iusver}-backports-ssl_match_hostname
-BuildRequires:  python%{iusver}-devel
-Requires:       python%{iusver}
+BuildRequires:  python%{iusver}-devel >= 2.7.9-1
+Requires:       python%{iusver} >= 2.7.9-1
 # Keep the python-distribute name active for a few releases.  Eventually we'll
 # want to get rid of the Provides and just keep the Obsoletes
 Provides:       python%{iusver}-distribute = %{version}-%{release}
