@@ -17,7 +17,6 @@ Vendor:         IUS Community Project
 Group:          Applications/System
 License:        Python or ZPLv2.0
 URL:            https://pypi.python.org/pypi/%{srcname}
-#Source0:        https://pypi.python.org/simple/%{srcname}/%{srcname}-%{version}.tar.gz
 Source0:       https://pypi.io/packages/source/s/%{srcname}/%{srcname}-%{version}.tar.gz
 Source1:        psfl.txt
 Source2:        zpl.txt
