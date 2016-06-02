@@ -15,11 +15,9 @@ Release:        1.ius%{?dist}
 Summary:        Easily build and distribute Python %{pyver} packages
 Vendor:         IUS Community Project
 Group:          Applications/System
-License:        Python or ZPLv2.0
+License:        MIT
 URL:            https://pypi.python.org/pypi/%{srcname}
 Source0:        https://files.pythonhosted.org/packages/source/s/%{srcname}/%{srcname}-%{version}.tar.gz
-Source1:        psfl.txt
-Source2:        zpl.txt
 %{?el5:BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)}
 BuildArch:      noarch
 BuildRequires:  python%{iusver}-devel >= 2.7.9-1
@@ -58,7 +56,6 @@ CFLAGS="$RPM_OPT_FLAGS" %{__python2} setup.py build
 %{__python2} setup.py install --optimize 1 --skip-build --root %{buildroot}
 %{__rm} -rf %{buildroot}%{python2_sitelib}/setuptools/tests
 %{__rm} -f %{buildroot}%{_bindir}/easy_install
-%{__install} -p -m 0644 %{SOURCE1} %{SOURCE2} .
 
 
 %if 0%{?with_check}
@@ -74,7 +71,7 @@ LC_CTYPE=en_US.utf8 %{__python2} setup.py ptr
 
 
 %files
-%doc *.txt docs
+%doc docs/*
 %{python2_sitelib}/*
 %{_bindir}/easy_install-%{pyver}
 
@@ -83,6 +80,7 @@ LC_CTYPE=en_US.utf8 %{__python2} setup.py ptr
 * Thu Jun 02 2016 Carl George <carl.george@rackspace.com> - 21.2.2-1.ius
 - Latest upstream
 - Switch Source0 URL to upstream recommendation
+- License changed to MIT https://github.com/pypa/setuptools/commit/d0bd7a5
 
 * Tue May 03 2016 Ben Harper <ben.harper@rackspace.com> - 20.10.1-1.ius
 - updating to 20.10.1
