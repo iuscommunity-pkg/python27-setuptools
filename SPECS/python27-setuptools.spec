@@ -10,14 +10,14 @@
 %global with_check 0
 
 Name:           python%{iusver}-%{srcname}
-Version:        30.2.0
+Version:        33.1.1
 Release:        1.ius%{?dist}
 Summary:        Easily build and distribute Python %{pyver} packages
 Vendor:         IUS Community Project
 Group:          Applications/System
 License:        MIT
 URL:            https://pypi.python.org/pypi/%{srcname}
-Source0:        https://files.pythonhosted.org/packages/source/s/%{srcname}/%{srcname}-%{version}.tar.gz
+Source0:        https://files.pythonhosted.org/packages/source/s/%{srcname}/%{srcname}-%{version}.zip
 %{?el5:BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)}
 BuildArch:      noarch
 BuildRequires:  python%{iusver}-devel >= 2.7.9-1
@@ -77,6 +77,9 @@ LC_CTYPE=en_US.utf8 %{__python2} setup.py ptr
 
 
 %changelog
+* Mon Mar 06 2017 Carl George <carl.george@rackspace.com> - 33.1.1-1.ius
+- Update to version 33
+
 * Mon Dec 05 2016 Ben Harper <ben.harper@rackspace.com> - 30.2.0-1.ius
 - Monthly release
 
