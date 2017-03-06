@@ -71,6 +71,7 @@ LC_CTYPE=en_US.utf8 %{__python2} setup.py ptr
 
 
 %files
+%license LICENSE
 %doc docs/*
 %{python2_sitelib}/*
 %{_bindir}/easy_install-%{pyver}
@@ -79,6 +80,7 @@ LC_CTYPE=en_US.utf8 %{__python2} setup.py ptr
 %changelog
 * Mon Mar 06 2017 Carl George <carl.george@rackspace.com> - 33.1.1-1.ius
 - Update to version 33
+- Install LICENSE file
 
 * Mon Dec 05 2016 Ben Harper <ben.harper@rackspace.com> - 30.2.0-1.ius
 - Monthly release
