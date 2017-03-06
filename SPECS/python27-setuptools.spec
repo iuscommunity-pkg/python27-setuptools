@@ -70,8 +70,7 @@ LC_CTYPE=en_US.utf8 %{__python2} setup.py ptr
 
 
 %files
-%license LICENSE
-%doc docs/*
+%doc docs/* LICENSE
 %{python2_sitelib}/*
 %{_bindir}/easy_install-%{python2_version}
 
