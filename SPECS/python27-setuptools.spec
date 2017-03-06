@@ -1,18 +1,15 @@
-%global pymajor 2
-%global pyminor 7
-%global pyver %{pymajor}.%{pyminor}
-%global iusver %{pymajor}%{pyminor}
-%global __python2 %{_bindir}/python%{pyver}
-%global python2_sitelib  %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
-%global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")
+%global python python27
+%global python2_version 2.7
+%global __python2 %{_bindir}/python%{python2_version}
+%global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
 %global __os_install_post %{__python27_os_install_post}
 %global srcname setuptools
 %global with_check 0
 
-Name:           python%{iusver}-%{srcname}
+Name:           %{python}-%{srcname}
 Version:        33.1.1
 Release:        1.ius%{?dist}
-Summary:        Easily build and distribute Python %{pyver} packages
+Summary:        Easily build and distribute Python packages
 Vendor:         IUS Community Project
 Group:          Applications/System
 License:        MIT
@@ -20,16 +17,16 @@ URL:            https://pypi.python.org/pypi/%{srcname}
 Source0:        https://files.pythonhosted.org/packages/source/s/%{srcname}/%{srcname}-%{version}.zip
 %{?el5:BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)}
 BuildArch:      noarch
-BuildRequires:  python%{iusver}-devel >= 2.7.9-1
-Requires:       python%{iusver} >= 2.7.9-1
+BuildRequires:  %{python}-devel >= 2.7.9-1
+Requires:       %{python} >= 2.7.9-1
 # Keep the python-distribute name active for a few releases.  Eventually we'll
 # want to get rid of the Provides and just keep the Obsoletes
-Provides:       python%{iusver}-distribute = %{version}-%{release}
-Obsoletes:      python%{iusver}-distribute <= 0.6.49-2.ius%{?dist}
+Provides:       %{python}-distribute = %{version}-%{release}
+Obsoletes:      %{python}-distribute <= 0.6.49-2.ius%{?dist}
 %if 0%{?with_check}
 # we don't have IUS versions of these yet
-BuildRequires:  python%{iusver}-pytest
-BuildRequires:  python%{iusver}-mock
+BuildRequires:  %{python}-pytest
+BuildRequires:  %{python}-mock
 %endif
 
 
@@ -50,14 +47,14 @@ find setuptools -name \*.py | xargs sed -i -e '1 {/^#!\//d}'
 
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" %{__python2} setup.py build
+%{__python2} setup.py build
 
 
 %install
 %{?el5:%{__rm} -rf %{buildroot}}
 %{__python2} setup.py install --optimize 1 --skip-build --root %{buildroot}
-%{__rm} -rf %{buildroot}%{python2_sitelib}/setuptools/tests
-%{__rm} -f %{buildroot}%{_bindir}/easy_install
+%{__rm} -r docs/{Makefile,conf.py,_*}
+%{__rm} %{buildroot}%{_bindir}/easy_install
 
 
 %if 0%{?with_check}
@@ -76,7 +73,7 @@ LC_CTYPE=en_US.utf8 %{__python2} setup.py ptr
 %license LICENSE
 %doc docs/*
 %{python2_sitelib}/*
-%{_bindir}/easy_install-%{pyver}
+%{_bindir}/easy_install-%{python2_version}
 
 
 %changelog
