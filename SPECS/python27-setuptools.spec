@@ -2,12 +2,11 @@
 %global python2_version 2.7
 %global __python2 %{_bindir}/python%{python2_version}
 %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
-%global __os_install_post %{__python27_os_install_post}
 %global srcname setuptools
 %global with_check 0
 
 Name:           %{python}-%{srcname}
-Version:        33.1.1
+Version:        36.6.0
 Release:        1.ius%{?dist}
 Summary:        Easily build and distribute Python packages
 Vendor:         IUS Community Project
@@ -15,7 +14,6 @@ Group:          Applications/System
 License:        MIT
 URL:            https://pypi.python.org/pypi/%{srcname}
 Source0:        https://files.pythonhosted.org/packages/source/s/%{srcname}/%{srcname}-%{version}.zip
-%{?el5:BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)}
 BuildArch:      noarch
 BuildRequires:  %{python}-devel >= 2.7.9-1
 Requires:       %{python} >= 2.7.9-1
@@ -44,6 +42,8 @@ execute the software that requires pkg_resources.py.
 
 # Strip shebangs
 find setuptools -name \*.py | xargs sed -i -e '1 {/^#!\//d}'
+# Remove bundled exes
+rm -f setuptools/*.exe
 
 
 %build
@@ -51,10 +51,9 @@ find setuptools -name \*.py | xargs sed -i -e '1 {/^#!\//d}'
 
 
 %install
-%{?el5:%{__rm} -rf %{buildroot}}
 %{__python2} setup.py install --optimize 1 --skip-build --root %{buildroot}
-%{__rm} -r docs/{Makefile,conf.py,_*}
-%{__rm} %{buildroot}%{_bindir}/easy_install
+rm -r docs/{Makefile,conf.py,_*}
+rm %{buildroot}%{_bindir}/easy_install
 
 
 %if 0%{?with_check}
@@ -65,17 +64,20 @@ LC_CTYPE=en_US.utf8 %{__python2} setup.py ptr
 %endif
 
 
-%{?el5:%clean}
-%{?el5:%{__rm} -rf %{buildroot}}
-
-
 %files
-%doc docs/* LICENSE
+%license LICENSE
+%doc docs/*
 %{python2_sitelib}/*
 %{_bindir}/easy_install-%{python2_version}
 
 
 %changelog
+* Thu Nov 09 2017 Ben Harper <ben.harper@rackspace.com> - 36.6.0-1.ius
+- Latest upstream
+- drop EL5 stuff
+- use license macro
+- don't include exe files
+
 * Mon Mar 06 2017 Carl George <carl.george@rackspace.com> - 33.1.1-1.ius
 - Update to version 33
 - Install LICENSE file
