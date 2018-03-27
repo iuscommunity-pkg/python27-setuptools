@@ -1,16 +1,11 @@
 %global python python27
-%global python2_version 2.7
-%global __python2 %{_bindir}/python%{python2_version}
-%global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
 %global srcname setuptools
 %global with_check 0
 
 Name:           %{python}-%{srcname}
-Version:        36.6.0
+Version:        39.0.1
 Release:        1.ius%{?dist}
 Summary:        Easily build and distribute Python packages
-Vendor:         IUS Community Project
-Group:          Applications/System
 License:        MIT
 URL:            https://pypi.python.org/pypi/%{srcname}
 Source0:        https://files.pythonhosted.org/packages/source/s/%{srcname}/%{srcname}-%{version}.zip
@@ -47,31 +42,36 @@ rm -f setuptools/*.exe
 
 
 %build
-%{__python2} setup.py build
+%{__python27} setup.py build
 
 
 %install
-%{__python2} setup.py install --optimize 1 --skip-build --root %{buildroot}
+%{__python27} setup.py install --optimize 1 --skip-build --root %{buildroot}
 rm -r docs/{Makefile,conf.py,_*}
 rm %{buildroot}%{_bindir}/easy_install
 
 
 %if 0%{?with_check}
 %check
-# Upstream has switched to 'setup.py ptr'.  We need to build
-# python%{iusver}-mock and python%{iusver}-pytest to enable this.
-LC_CTYPE=en_US.utf8 %{__python2} setup.py ptr
+LANG=en_US.utf8 PYTHONPATH=$(pwd) py.test-%{python27_version}
 %endif
 
 
 %files
 %license LICENSE
-%doc docs/*
-%{python2_sitelib}/*
-%{_bindir}/easy_install-%{python2_version}
+%doc docs/* CHANGES.rst README.rst
+%{python27_sitelib}/easy_install.py*
+%{python27_sitelib}/pkg_resources/
+%{python27_sitelib}/setuptools/
+%{python27_sitelib}/setuptools-%{version}-py2.7.egg-info
+%{_bindir}/easy_install-%{python27_version}
 
 
 %changelog
+* Tue Mar 27 2018 Carl George <carl@george.computer> - 39.0.1-1.ius
+- Latest upstream
+- Include CHANGES.rst and README.rst
+
 * Thu Nov 09 2017 Ben Harper <ben.harper@rackspace.com> - 36.6.0-1.ius
 - Latest upstream
 - drop EL5 stuff
